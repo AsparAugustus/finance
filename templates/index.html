@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+</pre>
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+</head>
+        {% if cash %}
+        <table style="width:900px" class="center">
+            <thead name="thead">
+               <trclass="tableformat">
+                   <th>Cash balance:</th>
+                   {% for dict in cash %}
+                       {% for key, value in dict.items() %}
+                       <td>{{ value | usd }}</td>
+                       {% endfor %}
+                    {% endfor %}
+                   </tr>
+                   </thread>
+                   {% endif %}
+
+
+        {% if Stock %}
+        <table style="width:900px" class="center">
+            <thead name="thead">
+               <trclass="tableformat">
+                    <th>Stock</th>
+                    <th>Shares Owned</th>
+                    <th>Total Costs</th>
+                    <th>Current Value</th>
+                    <th>PnL</th>
+                </tr>
+             </thead>
+        {% endif %}
+
+
+            <tbody>
+            {% for dictionary in Stock %}
+
+
+            {% for key, value in dictionary.items() %}
+            {% if key != 'PnL' and key != 'CurrentValue' and key != 'SUM(numShares*price)' %}
+                <td>{{ value }}</td>
+                {% elif (key == 'CurrentValue') %}
+                    <td>{{ value|usd }}</td>
+                {% elif (key == "SUM(numShares*price)") %}
+                    <td>{{ value|usd }}</td>
+                {% else %}
+
+                    {% if value > 0 %}
+                    <td class="profit">{{ value|usd }}</td>
+
+                    {% else %}
+                    <td class="loss">{{ value|usd }}</td>
+                    {% endif %}
+            {% endif %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+
+
+         </table>
+
+{% endblock %}

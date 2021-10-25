@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+        </div>
+        <div class="form-group">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+      {% if name %}
+        <table>
+            <thead name="thead">
+               <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Symbol</th>
+                </tr>
+             </thead>
+
+
+            <tbody>
+                <tr>
+                    <td>{{ Name }}</td>
+                    <td>{{ Price }}</td>
+                    <td>{{ Symbol }}</td>
+                </tr>
+            </tbody>
+
+
+
+         </table>
+        {% endif %}
+
+        {% endblock %}
+
+</main>

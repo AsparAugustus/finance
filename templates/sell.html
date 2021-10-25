@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <form action="/sell" method="post">
+    <label for="sell-stock">Choose a stock to sell</label>
+
+    <select name="symbol" id="sell-stock">
+    <option value="">--Please choose an option--</option>
+    {% if stocks_owned %}
+    {% for dictionary in stocks_owned %}
+
+        {% for key, value in dictionary.items() %}
+        <option value="{{ value }}">{{ value }}</option>
+        {% endfor %}
+    {% endfor %}
+    {% endif %}
+    </select>
+
+        <div class="form-group">
+
+            <input class="form-control" name="shares" placeholder="Number of shares" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+
+    <table>
+        <tr>
+            <td>{{ cash }}</td>
+        </tr>
+    </table>
+{% endblock %}

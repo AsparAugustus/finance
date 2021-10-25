@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+</pre>
+
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+</head>
+
+
+        {% if history %}
+        <table style="width:900px" class="center">
+            <thead name="thead">
+               <trclass="tableformat">
+                    <th>Stock</th>
+                    <th>Bought/Sold</th>
+                    <th>Shares</th>
+                    <th>Price</th>*
+                    <th>Total Value</th>*
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+             </thead>
+        {% endif %}
+
+
+            <tbody>
+            {% for dictionary in history %}
+
+
+            {% for key, value in dictionary.items() %}
+            {% if key != 'price' and key != 'totalvalue' and key != 'buy' %}
+                <td>{{ value }}</td>
+
+                {% elif (key == 'buy' and value == 1) %}
+                    <td>Bought</td>
+                {% elif (key == 'buy' and value == 0) %}
+                    <td>Sold</td>
+
+                {% elif (key == 'price') %}
+                    <td>$  {{ value|round }}</td>
+                {% elif (key == 'totalvalue') %}
+                    <td>$  {{ value|round }}</td>
+
+            {% endif %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+
+
+         </table>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+CREATE TABLE 'symbols' (
+            primary_key INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER NOT NULL,
+            stock text NOT NULL,
+            numShares integer NOT NULL
+            );
