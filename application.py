@@ -524,7 +524,7 @@ def sell():
 
                     #lets say, 2 shares owned and 3 to sell
                     #if one data value is overwhelmed by selling pressure
-                    if item["numShares"] <= inner_counter and item["numShares"] != 0:
+                    if item["numshares"] <= inner_counter and item["numshares"] != 0:
                         """actually im going to delete table row from symbols"""
                         db.execute("DELETE FROM symbols WHERE primary_key = :primary_key", primary_key=item['primary_key'])
 
@@ -538,27 +538,27 @@ def sell():
                         now = datetime.now()
 
                         """update transaction history here"""
-                        db.execute("INSERT into transactions (buy, stock, numShares, price, date, time, id) VALUES(?, ?, ?, ?, ?, ?, ?)", 0, symbol, item["numShares"] , symbol_price, today.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), user_id)
+                        db.execute("INSERT into transactions (buy, stock, numshares, price, date, time, id) VALUES(?, ?, ?, ?, ?, ?, ?)", 0, symbol, item["numshares"] , symbol_price, today.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), user_id)
 
 
 
-                        value = item["numShares"] * symbol_price
+                        value = item["numshares"] * symbol_price
                         db.execute("UPDATE users SET cash = cash + :value WHERE id= :user_id", value = value, user_id = user_id)
 
 
-                        print(f"inner_counter before : {inner_counter} to minus numshares {item['numShares']}")
-                        inner_counter = inner_counter - item["numShares"]
-                        print(f"inner_counter now: {inner_counter} to minus numshares {item['numShares']}")
+                        print(f"inner_counter before : {inner_counter} to minus numshares {item['numshares']}")
+                        inner_counter = inner_counter - item["numshares"]
+                        print(f"inner_counter now: {inner_counter} to minus numshares {item['numshares']}")
 
 
-                        print(f'inner counter (does it say 1?) : {inner_counter} item["numShares"] {item["numShares"]}')
+                        print(f'inner counter (does it say 1?) : {inner_counter} item["numshares"] {item["numshares"]}')
                         #inner_sell(inner_counter)
 
                     #if data value is bigger than selling pressure
                     else:
 
-                        print(f"sell counter else loop  : {inner_counter} which is SMALLER than {item['numShares']}")
-                        db.execute("UPDATE symbols SET numShares = numShares - :inner_sell WHERE primary_key = :primary_key", inner_sell = inner_counter, primary_key = item['primary_key'])
+                        print(f"sell counter else loop  : {inner_counter} which is SMALLER than {item['numshares']}")
+                        db.execute("UPDATE symbols SET numshares = numshares - :inner_sell WHERE primary_key = :primary_key", inner_sell = inner_counter, primary_key = item['primary_key'])
                         final_price = inner_counter * symbol_price
                         db.execute("UPDATE users SET cash = cash + :value WHERE id= :user_id", value = final_price, user_id = user_id)
 
@@ -566,8 +566,8 @@ def sell():
                         now = datetime.now()
 
                         """update transaction history here"""
-                        db.execute("INSERT into transactions (buy, stock, numShares, price, date, time, id) VALUES(?, ?, ?, ?, ?, ?, ?)", 0, symbol, inner_counter, symbol_price, today.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), user_id)
-                        inner_counter = inner_counter - item["numShares"]
+                        db.execute("INSERT into transactions (buy, stock, numshares, price, date, time, id) VALUES(?, ?, ?, ?, ?, ?, ?)", 0, symbol, inner_counter, symbol_price, today.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), user_id)
+                        inner_counter = inner_counter - item["numshares"]
                         return redirect("/")
 
             inner_sell(sell_counter)
