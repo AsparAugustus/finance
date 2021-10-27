@@ -77,7 +77,7 @@ def index():
     print(f"type of user_tickers : {typeof}")
 
 
-    sum_sharevalue = db.execute("SELECT stock, SUM(numShares), SUM(numShares*price) FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
+    sum_sharevalue = db.execute("SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
 
     '''
     for stock in sum_sharevalue:
@@ -461,7 +461,7 @@ def sell():
 
 
         """get stock name, total shares, total value"""
-        sum_sharevalues = db.execute("SELECT stock, SUM(numShares), SUM(numShares*price) FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
+        sum_sharevalues = db.execute("SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
         for s_list in sum_sharevalues:
             if s_list["stock"] == stock:
                 shares_list = s_list
@@ -484,7 +484,7 @@ def sell():
         symbol = symbol_dict['symbol']
 
         #list containing primary_key, stock... see below
-        shares_owned_listdict = db.execute("SELECT primary_key, stock, numShares, price , (numShares*price) FROM symbols WHERE id = :user_id AND stock = :stock", stock = stock, user_id = user_id)
+        shares_owned_listdict = db.execute("SELECT primary_key, stock, numShares, price , (numShares*price) AS "(numshares*price)" FROM symbols WHERE id = :user_id AND stock = :stock", stock = stock, user_id = user_id)
         shares_owned = shares_owned_listdict[0]
         print(f"Shares owned : {shares_owned}")
         print(f"type of shares_owned {type(shares_owned)}")
