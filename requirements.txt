@@ -39,7 +39,6 @@ help50==3.0.5
 html5lib==1.1
 icdiff==2.0.4
 idna==3.2
-ikp3db==1.4.5
 Inflector==2.0.12
 intervaltree==2.1.0
 isort==5.9.3
