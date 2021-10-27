@@ -9,7 +9,6 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
-from flask_sqlalchemy import SQLALchemy
 import re
 
 from helpers import apology, login_required, lookup, usd
@@ -18,7 +17,6 @@ import json
 
 # Configure application
 app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -40,14 +38,10 @@ app.jinja_env.filters["usd"] = usd
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 Session(app)
 
 # Configure CS50 Library to use SQLite databases
-
-db = SQLALchemy(app)
-
+db = SQL(os.getenv("DATABASE_URL"))
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
