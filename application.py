@@ -484,7 +484,7 @@ def sell():
         symbol = symbol_dict['symbol']
 
         #list containing primary_key, stock... see below
-        shares_owned_listdict = db.execute("SELECT primary_key, stock, numShares, price , (numShares*price) AS "(numshares*price)" FROM symbols WHERE id = :user_id AND stock = :stock", stock = stock, user_id = user_id)
+        shares_owned_listdict = db.execute("SELECT primary_key, stock, numShares, price, (numShares*price) AS sumtotal FROM symbols WHERE id = :user_id AND stock = :stock", stock = stock, user_id = user_id)
         shares_owned = shares_owned_listdict[0]
         print(f"Shares owned : {shares_owned}")
         print(f"type of shares_owned {type(shares_owned)}")
