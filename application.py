@@ -77,7 +77,7 @@ def index():
     print(f"type of user_tickers : {typeof}")
 
 
-    sum_sharevalue = db.execute('SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock', user_id = user_id)
+    sum_sharevalue = db.execute('SELECT stock, SUM(numShares) AS sumofshares, SUM(numShares*price) AS sumtotal FROM symbols WHERE id = :user_id GROUP BY stock', user_id = user_id)
 
     '''
     for stock in sum_sharevalue:
@@ -132,11 +132,11 @@ def index():
 
     sum_counter = 0
     for i in range(len(sum_sharevalue)):
-        currentvalue = (sum_sharevalue[i]["SUM(numShares)"]*current_prices[sum_counter])
-        pnl_value = (currentvalue - sum_sharevalue[i]["SUM(numShares*price)"])
-        total_cost = sum_sharevalue[i]["SUM(numShares*price)"]
+        currentvalue = (sum_sharevalue[i]["sumofshares"]*current_prices[sum_counter])
+        pnl_value = (currentvalue - sum_sharevalue[i]["sumtotal"])
+        total_cost = sum_sharevalue[i]["sumtotal"]
 
-        #sum_sharevalue[i]["TotalCost"] = sum_sharevalue[i]["SUM(numShares*price)"]
+        #sum_sharevalue[i]["TotalCost"] = sum_sharevalue[i]["sumtotal"]
 
         sum_sharevalue[i]['CurrentValue'] = currentvalue
         sum_sharevalue[i]['PnL'] = pnl_value
@@ -461,13 +461,13 @@ def sell():
 
 
         """get stock name, total shares, total value"""
-        sum_sharevalues = db.execute("SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
+        sum_sharevalues = db.execute("SELECT stock, SUM(numShares) AS sumofshares, SUM(numShares*price) AS sumtotal FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
         for s_list in sum_sharevalues:
             if s_list["stock"] == stock:
                 shares_list = s_list
 
         """Get amount of specific shares owned"""
-        sum_shares_2 = shares_list["SUM(numShares)"]
+        sum_shares_2 = shares_list["sumofshares"]
         print(f"sumshares : {sum_shares_2}")
 
 
