@@ -77,7 +77,7 @@ def index():
     print(f"type of user_tickers : {typeof}")
 
 
-    sum_sharevalue = db.execute("SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock", user_id = user_id)
+    sum_sharevalue = db.execute('SELECT stock, SUM(numShares) AS "SUM(numShares)", SUM(numShares*price) AS "SUM(numShares*price)" FROM symbols WHERE id = :user_id GROUP BY stock', user_id = user_id)
 
     '''
     for stock in sum_sharevalue:
